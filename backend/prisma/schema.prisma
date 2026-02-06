@@ -1,0 +1,108 @@
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "binary"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  name      String
+  role      String    // admin, agent, analyst
+  leads     Lead[]    @relation("AgentLeads")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model Lead {
+  id               String           @id @default(uuid())
+  firstName        String
+  lastName         String
+  email            String
+  phone            String?
+  source           String           // Web, Referral, etc.
+  status           String           @default("NEW") // NEW, CONTACTED, QUALIFIED, DISCARDED
+  score            Int              @default(0)
+  scoringReason    String?          // Explicable AI scoring
+  ownerId          String?
+  owner            User?            @relation("AgentLeads", fields: [ownerId], references: [id])
+  investorProfile  InvestorProfile?
+  inquiries        Inquiry[]
+  activities       Activity[]
+  documents        Document[]
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  deletedAt        DateTime?
+}
+
+model InvestorProfile {
+  id            String   @id @default(uuid())
+  leadId        String   @unique
+  lead          Lead     @relation(fields: [leadId], references: [id])
+  budgetMin     Float?
+  budgetMax     Float?
+  preferences   String?  // JSON or text
+  location      String?
+  language      String   @default("ES")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Property {
+  id          String    @id @default(uuid())
+  title       String
+  description String
+  type        String    // Villa, Apartment, etc.
+  location    String
+  price       Float
+  currency    String    @default("EUR")
+  status      String    @default("AVAILABLE") // AVAILABLE, RESERVED, SOLD, OFF_MARKET
+  features    String?   // JSON or text
+  inquiries   Inquiry[]
+  documents   Document[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+}
+
+model Inquiry {
+  id         String   @id @default(uuid())
+  leadId     String
+  lead       Lead     @relation(fields: [leadId], references: [id])
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id])
+  message    String?
+  status     String   @default("OPEN")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Document {
+  id          String    @id @default(uuid())
+  title       String
+  type        String    // DOSSIER, CONTRACT, NDA
+  url         String
+  expiresAt   DateTime?
+  leadId      String?
+  lead        Lead?     @relation(fields: [leadId], references: [id])
+  propertyId  String?
+  property    Property? @relation(fields: [propertyId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+}
+
+model Activity {
+  id        String   @id @default(uuid())
+  leadId    String
+  lead      Lead     @relation(fields: [leadId], references: [id])
+  type      String   // NOTE, CALL, EMAIL, SYSTEM
+  content   String
+  metadata  String?  // JSON for AI tracing etc.
+  createdAt DateTime @default(now())
+}

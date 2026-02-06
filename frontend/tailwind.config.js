@@ -1,0 +1,43 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        'anclora-teal-primary': '#0B313F',
+        'anclora-teal-dark': '#07252F',
+        'anclora-teal-hover': '#124A50',
+        'anclora-teal-bg': '#0F3F45',
+        'anclora-gold': '#D4AF37',
+        'anclora-gold-light': '#E6C96E',
+        'bg-dark': '#07252F',
+        'text-primary': '#F5F5F0',
+        'text-secondary': 'rgba(245, 245, 240, 0.7)',
+        'glass': 'rgba(11, 49, 63, 0.45)',
+        'border-gold': 'rgba(212, 175, 55, 0.2)',
+      },
+      fontFamily: {
+        cardo: ['Cardo', 'serif'],
+        inter: ['Inter', 'sans-serif'],
+        fraunces: ['Fraunces', 'serif'],
+        cormorant: ['Cormorant Garamond', 'serif'],
+      },
+      backgroundImage: {
+        'gold-gradient': 'linear-gradient(135deg, #BF953F 0%, #FCF6BA 45%, #B38728 50%, #FBF5B7 55%, #AA771C 100%)',
+      },
+      transitionProperty: {
+        'premium': 'all',
+      },
+      transitionTimingFunction: {
+        'premium': 'cubic-bezier(0.19, 1, 0.22, 1)',
+      },
+      transitionDuration: {
+        'premium': '800ms',
+      }
+    },
+  },
+  plugins: [],
+}

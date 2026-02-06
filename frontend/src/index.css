@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Inter:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;500;600&family=Cormorant+Garamond:wght@400;500;600&display=swap');
+@import './styles/tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-bg-dark text-text-primary font-inter antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-cardo tracking-tight;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-anclora-teal-primary/45 backdrop-blur-md border border-anclora-gold/20 rounded-lg;
+  }
+
+  .btn-primary {
+    @apply bg-anclora-teal-primary text-text-primary px-6 py-2 rounded-md font-medium 
+           transition-premium hover:scale-105 active:scale-95 border border-anclora-gold/30
+           hover:shadow-[0_0_15px_rgba(212,175,55,0.3)];
+  }
+
+  .btn-secondary {
+    @apply border border-text-primary/30 bg-transparent text-text-primary px-6 py-2 rounded-md 
+           font-medium transition-premium hover:bg-text-primary/10;
+  }
+}
