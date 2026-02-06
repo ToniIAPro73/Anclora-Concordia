@@ -1,10 +1,13 @@
 {
     "folders": [
 		{
+			"path": "../Anclora-Concordia"
+		},
+		{
 			"path": "../Anclora-Agents-Skills"
 		},
 		{
-			"path": "."
+			"path": "../Anclora-Private-Estates-Antigravity"
 		}
 	]
 }
